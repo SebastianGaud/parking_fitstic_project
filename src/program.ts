@@ -1,0 +1,92 @@
+import * as rl from 'readline-sync';
+import { Parcheggio } from "./classes/Parcheggio";
+
+const p : Parcheggio = new Parcheggio();
+
+class Program{    
+
+    static Main():void
+    {
+        while(true)                   
+        {    
+            console.log(p.ParkRecap());
+            console.log("-------------------");                    
+            console.log("");
+            console.log("1) Entrata veicolo");
+            console.log("2) Uscita Veicolo");
+            console.log("3) Stampa lista veicoli parcheggiati");
+            console.log("4) Stampa numero veicoli parcheggiati");
+            console.log("5) Ricerca soste veicolo");
+            console.log("");
+            console.log("9) Esci");
+            console.log("");
+
+            let num = rl.questionInt("Inserisci la tua scelta:  ");
+
+            if (num ==9){
+                console.log("Grazie per aver usato il nostro parcheggio. A presto.");
+                console.clear()
+                return;
+            }
+            
+            ChooseAction(num);
+        }
+    }    
+}
+
+function ChiediTarga(){
+    let targa = rl.question("Inserisci targa veicolo: ")
+    return targa;
+}
+
+function ChooseAction(num : number){
+    
+    let targa : string;            
+
+    switch (num) {
+        case 1: 
+            targa = ChiediTarga()
+            let numParked = p.IsParkFull();
+            let carParked = p.IsCArParked(targa);
+            if (numParked != false){
+                console.log(numParked);
+                break;
+            }
+            if(carParked != false){
+                console.log(carParked);
+                break;
+            }
+            console.log(p.Enter(targa));
+            break; 
+
+        case 2:
+            targa = ChiediTarga()      
+            console.log(p.Exit(targa));           
+            break;
+
+        case 3:
+            console.log("Elenco veicoli attualmente parcheggiati: ");
+            let lista = p.ListParked();
+            for(let e of lista){ console.log(e)}            
+            break;
+            
+        case 4:
+            console.log("Numero veicoli attualmente parcheggiati: ");
+            console.log(p.NumParked());
+            break;
+
+        case 5:  
+            targa = ChiediTarga()          
+            console.log(`Riepilogo soste veicolo con targa ${targa}: `);
+            let listaSoste = p.RecapSoste(targa);
+            for(let e of listaSoste){ console.log(e)}
+            break;    
+                
+        default:
+            console.log("Valore inserito non valido. Riprovare");
+            console.clear();
+            break;
+    }            
+}
+
+Program.Main();

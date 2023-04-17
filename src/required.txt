@@ -1,0 +1,4 @@
+moment.js : npm install moment --save
+
+readline-sync : npm i readline-sync
+                npm i --save-dev @types/readline-sync
