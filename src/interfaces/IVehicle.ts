@@ -1,3 +1,3 @@
-export interface Vehicle {
-  carPlate: string;
+export interface IVehicle {
+    carPlate: string
 }
