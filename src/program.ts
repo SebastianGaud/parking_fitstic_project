@@ -75,8 +75,12 @@ function AskForPlate() {
 function ChooseAction(choice: number) {
     switch (choice) {
         case 1:
-            let plate = AskForPlate();
-            pc.enter(plate);
+            const insertPlate = AskForPlate();
+            pc.enter(insertPlate);
+            break;
+        case 2:
+            const exitPlate = AskForPlate();
+            console.log(pc.exit(exitPlate));
             break;
         case 3:
             const vehicles = pc.listParked();

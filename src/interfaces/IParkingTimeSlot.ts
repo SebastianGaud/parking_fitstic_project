@@ -1,7 +1,7 @@
 import { IVehicle } from './IVehicle';
 
-interface ISlot {
+export interface IParkingTimeSlot {
     startDate: Date;
-    endDate: Date;
+    endDate: Date | undefined;
     vehicle: IVehicle;
 }

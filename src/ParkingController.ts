@@ -1,39 +1,81 @@
 import { IParking } from './interfaces/IParking';
+import { IParkingTimeSlot } from './interfaces/IParkingTimeSlot';
 import { IVehicle } from './interfaces/IVehicle';
+import { ParkingTimeSlot } from './models/ParkingTimeSlot';
 import { Vehicle } from './models/Vehicle';
+
+import moment from 'moment';
 
 export class ParkingController {
     parking: IParking;
-    vehicles: IVehicle[];
+    vehicleTimeSlots: IParkingTimeSlot[];
 
-    constructor(parking: IParking, vehicles: IVehicle[]) {
+    constructor(parking: IParking, vehicleTimeSlots: IParkingTimeSlot[] = []) {
         this.parking = parking;
-        this.vehicles = [];
+        this.vehicleTimeSlots = vehicleTimeSlots;
     }
 
     static createInstance(
         parking: IParking,
-        vehicles: IVehicle[],
+        vehicleTimeSlots: IParkingTimeSlot[],
     ): ParkingController {
-        return new ParkingController(parking, vehicles);
+        return new ParkingController(parking, vehicleTimeSlots);
     }
 
-    private isCarInsideParking(carPlate: string) {
-        const isInside = this.vehicles.find((e) => e.carPlate == carPlate);
+    private getParked(): Array<IParkingTimeSlot> {
+        return this.vehicleTimeSlots.filter((e) => !e.endDate);
+    }
+
+    private isParkFull(): boolean {
+        return this.getParked().length >= this.parking.slots;
+    }
+
+    private canPark(carPlate: string): boolean {
+        return !this.isParkFull() && !this.isCarInsideParking(carPlate);
+    }
+
+    private getCarTimeSlot(carPlate: string): IParkingTimeSlot | undefined {
+        return this.getParked().find((e) => e.vehicle.carPlate == carPlate);
+    }
+
+    private isCarInsideParking(carPlate: string): boolean {
+        const isInside = this.getParked().some(
+            (e) => e.vehicle.carPlate == carPlate,
+        );
+
         return isInside;
     }
 
-    enter(carPlate: string): IVehicle {
+    enter(carPlate: string): IVehicle | null {
+        if (!this.canPark(carPlate)) {
+            return null;
+        }
+
         const v = Vehicle.createInstance(carPlate);
-        this.vehicles.push(v);
+        const slot = ParkingTimeSlot.createInstance(v, new Date(moment.now()));
+
+        this.vehicleTimeSlots.push(slot);
         return v;
     }
 
+    exit(carPlate: string): IVehicle | null {
+        const s = this.getCarTimeSlot(carPlate);
+
+        if (!s) {
+            return null;
+        }
+
+        s.endDate = new Date(moment.now());
+
+        return s.vehicle;
+    }
+
     listParked(): Array<string> {
+        const parkedVehicles = this.getParked();
         const plates = [];
 
-        for (const v of this.vehicles) {
-            plates.push(v.carPlate);
+        for (const v of parkedVehicles) {
+            plates.push(v.vehicle.carPlate);
         }
 
         return plates;
