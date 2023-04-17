@@ -1,17 +1,26 @@
 import moment from "moment";
 
-class Vehicle {
+export class Vehicle {
   private readonly carPlate: string;
-  private readonly startDate: Date;
-  private endDate: Date | undefined;
+  cost: number | undefined;
 
-  private isInsideParking: boolean;
-  private cost: number | undefined;
+  readonly startDate: Date;
+
+  endDate: Date | undefined;
+  isInsideParking: boolean;
 
   constructor(carPlate: string) {
     this.carPlate = carPlate;
     this.startDate = new Date(moment.now());
     this.isInsideParking = false;
+  }
+
+  get Plate(): string {
+    return this.carPlate;
+  }
+
+  get IsInsideParking(): boolean {
+    return this.isInsideParking;
   }
 
   public toString(): string {
