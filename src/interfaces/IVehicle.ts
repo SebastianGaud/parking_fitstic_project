@@ -1,3 +1,3 @@
 export interface IVehicle {
-    carPlate: string
+    carPlate: string;
 }
