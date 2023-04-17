@@ -1,6 +1,8 @@
 import * as rl from "readline-sync";
 import { Parking } from "./models/parking";
 
+// le informazioni iniziali le passiamo nel costruttore nel caso in cui volessimo
+// creare un altro parcheggio
 const p: Parking = new Parking(
   "Parcheggio 5",
   "Via Giovanni da Procida, 5",
@@ -66,6 +68,9 @@ function ChooseAction(num: number) {
   }
 }
 
+// non c'è bisogno di fare una classe "Program -> Main". In Javascript/Typescript
+// il codice all'interno dei file viene sempre eseguito dall'altro verso il basso
+// quindi il while viene eseguito come fosse nel "Main" di C#
 while (true) {
   console.log(p.ParkRecap());
   console.log("-------------------");
@@ -84,6 +89,8 @@ while (true) {
   if (num == 9) {
     console.log("Grazie per aver usato il nostro parcheggio. A presto.");
     console.clear();
+
+    // invece di fare return per uscire dal metodo faccio break per rompere il ciclo while
     break;
   }
 
