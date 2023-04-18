@@ -1,6 +1,6 @@
 # cose da risolvere in questa versione del progetto:
 
-- [] I modelli dovrebbero solo essere un vettore per i dati ad essi collegati e non devono contenere logica. eg:
+- [ ] I modelli dovrebbero solo essere un vettore per i dati ad essi collegati e non devono contenere logica. eg:
 
 ```typescript
 export class Vehicle {
@@ -72,5 +72,5 @@ const p: Parking = new Parking(
 );
 ```
 
-- [] Invece di avere i modelli per le classi, Creare le interfacce, che definiscono i dati
-- [] Creare le classi che devono poi gestire i dati da passare al "program.ts" per la parte di presentazione
+- [ ] Invece di avere i modelli per le classi, Creare le interfacce, che definiscono i dati
+- [ ] Creare le classi che devono poi gestire i dati da passare al "program.ts" per la parte di presentazione
