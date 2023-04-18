@@ -1,6 +1,6 @@
 # cose da risolvere in questa versione del progetto:
 
-- [ ] I modelli dovrebbero solo essere un vettore per i dati ad essi collegati e non devono contenere logica. eg:
+- [x] I modelli dovrebbero solo essere un vettore per i dati ad essi collegati e non devono contenere logica. eg:
 
 ```typescript
 export class Vehicle {
@@ -61,7 +61,7 @@ export class Parking {
 
 > Allo stesso modo il modello "Parking" Non deve contenere la logica di come si gestisce il parcheggio ma solo le informazioni su di esso
 
-- [ ] Rifacendoci al [Factory pattern](https://dev.to/luizcalaca/typescript-factory-design-pattern-in-practice-uml-6g9), è una buona idea implementare un metodo per inizializzare le classi:
+- [x] Rifacendoci al [Factory pattern](https://dev.to/luizcalaca/typescript-factory-design-pattern-in-practice-uml-6g9), è una buona idea implementare un metodo per inizializzare le classi:
 
 ```typescript
 const p: Parking = new Parking(
@@ -72,5 +72,5 @@ const p: Parking = new Parking(
 );
 ```
 
-- [ ] Invece di avere i modelli per le classi, Creare le interfacce, che definiscono i dati
-- [ ] Creare le classi che devono poi gestire i dati da passare al "program.ts" per la parte di presentazione
+- [x] Invece di avere i modelli per le classi, Creare le interfacce, che definiscono i dati
+- [x] Creare le classi che devono poi gestire i dati da passare al "program.ts" per la parte di presentazione
