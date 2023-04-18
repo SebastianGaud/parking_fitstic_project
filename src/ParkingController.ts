@@ -81,7 +81,7 @@ export class ParkingController {
         return v;
     }
 
-    exit(carPlate: string): IVehicle | null {
+    exit(carPlate: string): IParkingTimeSlot | null {
         const s = this.getCarTimeSlot(carPlate);
 
         if (!s) {
@@ -90,18 +90,26 @@ export class ParkingController {
 
         s.endDate = new Date(moment.now());
 
-        return s.vehicle;
+        return s;
     }
 
-    listParked(): Array<string> {
+    listParked(): Array<IParkingTimeSlot> {
         const parkedVehicles = this.getParked();
         const plates = [];
 
         for (const v of parkedVehicles) {
-            plates.push(v.vehicle.carPlate);
+            plates.push(v);
         }
 
         return plates;
+    }
+
+    getVehicleHistory(carPlate: string) {
+        const h = this.vehicleTimeSlots
+            .filter((e) => e.vehicle.carPlate == carPlate)
+            .filter((e) => e.endDate != null);
+
+        return h;
     }
 }
 

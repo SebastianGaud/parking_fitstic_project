@@ -1,6 +1,12 @@
 import * as rl from 'readline-sync';
 import { ParkingController } from './ParkingController';
 import { Parking } from './models/Parking';
+import {
+    enterVehicleMessage,
+    exitVehicleMessage,
+    vehicleSummary,
+    vehiclesParkedDetails,
+} from './MessageHelper';
 
 // le informazioni iniziali le passiamo nel costruttore nel caso in cui volessimo
 // creare un altro parcheggio
@@ -19,72 +25,25 @@ function AskForPlate() {
     return targa;
 }
 
-// function ChooseAction(num: number) {
-//     let targa: string;
-
-//     switch (num) {
-//         case 1:
-//             targa = ChiediTarga();
-//             let numParked = p.IsParkFull();
-//             let carParked = p.IsCArParked(targa);
-//             if (numParked != false) {
-//                 console.log(numParked);
-//                 break;
-//             }
-//             if (carParked != false) {
-//                 console.log(carParked);
-//                 break;
-//             }
-//             console.log(p.Enter(targa));
-//             break;
-
-//         case 2:
-//             targa = ChiediTarga();
-//             console.log(p.Exit(targa));
-//             break;
-
-//         case 3:
-//             console.log('Elenco veicoli attualmente parcheggiati: ');
-//             let lista = p.ListParked();
-//             for (let e of lista) {
-//                 console.log(e);
-//             }
-//             break;
-
-//         case 4:
-//             console.log('Numero veicoli attualmente parcheggiati: ');
-//             console.log(p.NumParked());
-//             break;
-
-//         case 5:
-//             targa = ChiediTarga();
-//             console.log(`Riepilogo soste veicolo con targa ${targa}: `);
-//             let listaSoste = p.RecapSoste(targa);
-//             for (let e of listaSoste) {
-//                 console.log(e);
-//             }
-//             break;
-
-//         default:
-//             console.log('Valore inserito non valido. Riprovare');
-//             console.clear();
-//             break;
-//     }
-// }
-
 function ChooseAction(choice: number) {
     switch (choice) {
         case 1:
             const insertPlate = AskForPlate();
-            pc.enter(insertPlate);
+            const inVehicle = pc.enter(insertPlate);
+            const message = enterVehicleMessage(inVehicle);
+            console.log(message);
             break;
         case 2:
             const exitPlate = AskForPlate();
-            console.log(pc.exit(exitPlate));
+            const exitVehicle = pc.exit(exitPlate);
+            const exitMessage = exitVehicleMessage(exitVehicle);
+            console.log(exitMessage);
             break;
         case 3:
             const vehicles = pc.listParked();
-            console.log(vehicles);
+            const parkedMessage = vehiclesParkedDetails(vehicles);
+            console.log(parkedMessage);
+            break;
         case 4:
             console.log('Numero veicoli attualmente parcheggiati: ');
             console.log(pc.parkedVehicles);
@@ -92,8 +51,9 @@ function ChooseAction(choice: number) {
 
         case 5:
             const carPlate = AskForPlate();
-            console.log(`Riepilogo soste veicolo con targa ${carPlate}: `);
-
+            const h = pc.getVehicleHistory(carPlate);
+            const hMessage = vehicleSummary(carPlate, h);
+            console.log(hMessage);
         default:
             break;
     }
