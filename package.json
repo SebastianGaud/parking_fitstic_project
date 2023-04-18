@@ -4,6 +4,10 @@
     "readline-sync": "^1.4.10"
   },
   "devDependencies": {
-    "@types/readline-sync": "^1.4.4"
+    "@types/readline-sync": "^1.4.4",
+    "typescript": "^5.0.4"
+  },
+  "scripts": {
+    "start": "tsc && node ./dist/program.js"
   }
 }
