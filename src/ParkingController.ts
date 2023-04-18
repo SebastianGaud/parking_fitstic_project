@@ -50,14 +50,14 @@ export class ParkingController {
         return this.getParked().length;
     }
 
-    getBalance(carPlate: string): IParkingTimeSlot {
-        const v = this.getCarTimeSlot(carPlate);
-
+    private getBalance(v: IParkingTimeSlot): number {
         if (!v) {
             throw new Error('Errore. Non posso calcolare il costo');
         }
 
-        const difMin = (v as ParkingTimeSlot).getMinutes();
+        let difMin = (v as ParkingTimeSlot).getMinutes();
+        difMin = difMin == 0 ? 15 : difMin;
+
         // 15 dovrebbe essere un valore costante da qualche parte
         const slots = Math.ceil(difMin / 15);
 
@@ -65,8 +65,8 @@ export class ParkingController {
         const costsXQuarter = this.parking.hourlyCost / 4;
 
         const cost = Math.round(slots * costsXQuarter * 100) / 100;
-        v.cost = cost;
-        return v;
+
+        return cost;
     }
 
     enter(carPlate: string): IVehicle | null {
@@ -89,6 +89,8 @@ export class ParkingController {
         }
 
         s.endDate = new Date(moment.now());
+        const c = this.getBalance(s);
+        s.cost = c;
 
         return s;
     }

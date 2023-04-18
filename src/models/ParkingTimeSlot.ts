@@ -28,8 +28,12 @@ export class ParkingTimeSlot implements IParkingTimeSlot {
         this._endDate = value;
     }
 
-    set cost(cost: number) {
+    set cost(cost: number | null) {
         this._cost = cost;
+    }
+
+    get cost(): number | null {
+        return this._cost;
     }
 
     // da togliere in un secondo momento probabilmente
