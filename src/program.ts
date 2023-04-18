@@ -10,7 +10,6 @@ import {
 
 // le informazioni iniziali le passiamo nel costruttore nel caso in cui volessimo
 // creare un altro parcheggio
-
 const p: Parking = Parking.createInstance(
     'Parcheggio 5',
     'Via Giovanni da Procida, 5',
