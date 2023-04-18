@@ -85,6 +85,15 @@ function ChooseAction(choice: number) {
         case 3:
             const vehicles = pc.listParked();
             console.log(vehicles);
+        case 4:
+            console.log('Numero veicoli attualmente parcheggiati: ');
+            console.log(pc.parkedVehicles);
+            break;
+
+        case 5:
+            const carPlate = AskForPlate();
+            console.log(`Riepilogo soste veicolo con targa ${carPlate}: `);
+
         default:
             break;
     }

@@ -46,9 +46,32 @@ export class ParkingController {
         return isInside;
     }
 
+    get parkedVehicles(): number {
+        return this.getParked().length;
+    }
+
+    getBalance(carPlate: string): IParkingTimeSlot {
+        const v = this.getCarTimeSlot(carPlate);
+
+        if (!v) {
+            throw new Error('Errore. Non posso calcolare il costo');
+        }
+
+        const difMin = (v as ParkingTimeSlot).getMinutes();
+        // 15 dovrebbe essere un valore costante da qualche parte
+        const slots = Math.ceil(difMin / 15);
+
+        // perchè 4? perchè 15 * 4 = 60 in un ora ci sono quattro blocchi anche questo dovrebbe essere da qualche parte
+        const costsXQuarter = this.parking.hourlyCost / 4;
+
+        const cost = Math.round(slots * costsXQuarter * 100) / 100;
+        v.cost = cost;
+        return v;
+    }
+
     enter(carPlate: string): IVehicle | null {
         if (!this.canPark(carPlate)) {
-            return null;
+            throw new Error("Errore. Non posso parcheggiare l'auto ora");
         }
 
         const v = Vehicle.createInstance(carPlate);
